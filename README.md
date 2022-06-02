@@ -11,7 +11,7 @@ The **issue tree framework** is an easy-to-go method to structure the problems i
 - Stitching the smaller solutions to solve the overall problem
 
 
-The following steps summarise the manner in which you should process your thinking and visualisation while writing a query:
+The following steps summarise the manner in which we should process our thinking and visualisation while writing a query:
 - Visualising the required output
   - Which columns will be there?
   - Which rows will be selected? Defined by the usage of filters (WHERE and HAVING)
