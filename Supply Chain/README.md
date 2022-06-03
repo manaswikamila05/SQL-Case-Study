@@ -29,15 +29,14 @@ Expected output: Type of Transaction | Orders (Sorted in the descending order of
 - Step 4: Sort the result in the descending order of Orders
 
 ```sql
-SELECT 
-Type AS transaction_type,
-COUNT(order_id) as orders
+SELECT TYPE AS transaction_type,
+               COUNT(order_id) AS orders
 FROM orders
-WHERE Order_City NOT IN ('Sangli', 'Srinagar')
-AND Order_Status <> 'SUSPECTED_FRAUD'
+WHERE Order_City NOT IN ('Sangli',
+                         'Srinagar')
+  AND Order_Status <> 'SUSPECTED_FRAUD'
 GROUP BY Transaction_type
 ORDER BY Orders DESC;
-
 ```
 ![image](https://user-images.githubusercontent.com/77529445/171622205-db813890-9a93-4747-bfb9-8c9941b0e125.png)
 
@@ -63,7 +62,28 @@ Expected output: Customer Id | Customer First Name | Customer City | Customer St
 - Step 4: Apply Aggregation – COUNT(order_id), SUM(Sales)  and GROUP BY Customer Id, Customer First Name, Customer City and Customer State.
 
 ```sql
-
+WITH order_summary AS
+  (SELECT ord.order_id,
+          ord.customer_id,
+          SUM(sales) AS ord_sales
+   FROM orders AS ord
+   JOIN ordered_items AS itm USING(order_id)
+   WHERE ord.order_status='COMPLETE'
+   GROUP BY ord.order_id)
+SELECT Id AS Customer_id,
+       First_Name AS Customer_First_Name,
+       City AS Customer_City,
+       State AS Customer_State,
+       COUNT(DISTINCT order_id) AS Completed_Orders,
+       SUM(ord_sales) AS Total_Sales
+FROM order_summary AS ord
+INNER JOIN customer_info AS cust ON ord.customer_id=cust.id
+GROUP BY Customer_id,
+         Customer_First_Name,
+         Customer_City
+ORDER BY Completed_Orders DESC,
+         Total_Sales DESC
+LIMIT 3;
 ```
 
 ***
