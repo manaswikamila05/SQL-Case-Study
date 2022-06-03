@@ -3,14 +3,31 @@
 
 The tables present in the supply chain data set are as follows:
 - Orders: Order_Id is the primary key.
+
+![image](https://user-images.githubusercontent.com/77529445/171837270-2e3594c0-574b-4dd4-9bb5-1938f2fc81a1.png)
+
 - Ordered_items: Order_Item_Id is the primary key, and Customer_Id is the unique identifier for the customers who placed the order and acts as a foreign key to the customer_info table. Category_Id is the unique identifier of the category of the product and acts as a foreign key to the category table.
+
+![image](https://user-images.githubusercontent.com/77529445/171837378-d7ede8ca-7f9b-4834-bee8-4f8f6ce86d2e.png)
+
 - Product_info: Product_Id is the primary key.
+
+![image](https://user-images.githubusercontent.com/77529445/171837769-a9639b52-6540-4ba1-8f6e-8b5e1a5a1fef.png)
+
 - customer_info: Id is the primary key.
+
+![image](https://user-images.githubusercontent.com/77529445/171837795-7995a1e4-770f-4a9c-83b7-0eaff182a6f4.png)
+
 - category: Id is the primary key.
+
+![image](https://user-images.githubusercontent.com/77529445/171837895-1e7fe3c0-fa44-41f5-a2dc-82663aa7d64c.png)
+
 - department: Id is the primary key.
 
+![image](https://user-images.githubusercontent.com/77529445/171837951-67ddc4d7-0e76-4228-a67f-ee386e597f30.png)
 
-In the .csv file provided, the Data Dictionary sheet contains all the relevant information, describing each column for a particular table. 
+
+In the .csv file provided, the Data Dictionary sheet contains all the relevant information, describing each column for a particular table. The insert statements were generated using Excel formulas.
 
 
 ***
