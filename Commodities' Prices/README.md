@@ -1,10 +1,11 @@
 # Commodities' Prices case study
 
-![image](https://user-images.githubusercontent.com/77529445/171987459-80e06e4b-135a-4666-87d9-28a9510d8318.png)
-
+![image](https://user-images.githubusercontent.com/77529445/171989172-57e16cbc-e7ee-4c0a-aa33-a302f780d8cc.png)
+- Id acts as a unique identifier in all three tables. 
 - Commodity_id in the price_details table and id in commodities_info table will be used to apply to join between these tables. 
+- Region_Id in the price_details table and id in region_info table will be used to apply to join between these tables. 
 
-- Id acts as a unique identifier between the price_details and region_info tables. 
+
 
 - Note that there is only one price for a particular commodity variety for a month. This means that the price does not change within the month for a commodity corresponding to a commodity_id.
 ***
