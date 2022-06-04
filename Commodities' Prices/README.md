@@ -173,17 +173,54 @@ LIMIT 1;
 ***
 
 ### Query 5
-****
+**What is the price variation of commodities for each city from January 2019 to December 2020? Which commodity has seen the highest price variation and in which city**
 
 ```sql
-
+Input: price_details: Id, region_id, commodity_id, date region_info: Id and City commodities_info: Id and Commodity
+Expected output: Commodity | city | Start Price | End Price | Variation absolute | Variation Percentage;  Sort in descending order of variation %
 ```
+
+- Step 1: Filter for January 2019 from the Date column of the price_details table.
+- Step 2: Filter for December 2020 from the Date column of the price_details table. Firstly, we filtered the price_details data separately for January 2019 and December 2020. Next, we had two tables onto which we could apply queries to find the price difference and variation.
+- Step 3: Do an inner join between the results from Step 1 and Step 2 on region_id and commodity id.
+- Step 4: Name the price from Step 1 result as Start Price and Step 2 result as End Price.
+- Step 5: Calculate variations in absolute and percentage; Sort the final table in descending order of variation percentage. After obtaining entries for January 2019 and December 2020, we joined the tables and found the price variation. We also did an inner join to avoid any blank entries. Then, sort the final table in descending order of variation to get maximum variation.
+- Step 6: Filter for the first record and join with region_info, commodities_info to get city and commodity name. Then, we LIMITed the records to one entry and joined it with region_info and commodities_info to get the name of the city and commodity.
 
 
 
 ```sql
-
+WITH jan_2019_data AS
+  (SELECT *
+   FROM price_details
+   WHERE date BETWEEN '2019-01-01' AND '2019-01-31' ),
+     dec_2020_data AS
+  (SELECT *
+   FROM price_details
+   WHERE date BETWEEN '2020-12-01' AND '2020-12-31' ),
+     price_variation AS
+  (SELECT j.region_id,
+          j.commodity_id,
+          j.retail_price AS start_price,
+          d.retail_price AS end_price,
+          d.retail_price-j.retail_price AS variation,
+          round((d.retail_price-j.retail_price)/j.retail_price *100, 2) AS variation_percentage
+   FROM jan_2019_data AS j
+   INNER JOIN dec_2020_data AS d ON j.region_id = d.region_id
+   AND j.commodity_id=d.commodity_id
+   ORDER BY variation_percentage DESC
+   LIMIT 1)
+SELECT r.centre AS city,
+       c.commodity AS commodity,
+       start_price,
+       end_price,
+       variation,
+       variation_percentage
+FROM price_variation AS p
+INNER JOIN region_info AS r ON p.region_id = r.id
+INNER JOIN commodities_info AS c ON p.commodity_id = c.id;
 ```
+![image](https://user-images.githubusercontent.com/77529445/171991871-3b8f7992-48b8-4657-bc01-ffebb3e1a56c.png)
 
 ***
 
